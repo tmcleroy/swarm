@@ -3,8 +3,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -12,18 +10,14 @@ import swarm.shared.Grid;
 import swarm.shared.Hex;
 import swarm.shared.Layout;
 import swarm.shared.Point;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Swarm extends ApplicationAdapter {
-	SpriteBatch batch;
     ShapeRenderer shapeRenderer;
     ArrayList<ArrayList<Point>> hexPoints;
 
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
         hexPoints = new ArrayList<ArrayList<Point>>();
 
@@ -32,8 +26,6 @@ public class Swarm extends ApplicationAdapter {
 		for(Hex h : grid.cells.values()) {
 			hexPoints.add(Layout.polygonCorners(layout, h));
 		}
-
-		System.out.println(hexPoints);
 	}
 
 	@Override
@@ -43,6 +35,7 @@ public class Swarm extends ApplicationAdapter {
 
         shapeRenderer.begin(ShapeType.Line);
         shapeRenderer.setColor(1, 0, 0, 1);
+
         for (ArrayList<Point> points : hexPoints) {
             ArrayList<Float> pointList = new ArrayList<Float>();
             for (Point p : points) {
@@ -55,11 +48,12 @@ public class Swarm extends ApplicationAdapter {
             shapeRenderer.polygon(vertices);
 
         }
+
         shapeRenderer.end();
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
+        shapeRenderer.dispose();
 	}
 }
