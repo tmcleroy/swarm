@@ -1,7 +1,5 @@
 package swarm.shared;
 
-import java.util.ArrayList;
-
 public class Hex {
     public final int q;
     public final int r;
@@ -49,37 +47,39 @@ public class Hex {
 
 
     static public Hex neighbor(Hex hex, int direction) {
-        return Hex.add(hex, Hex.directions.get(direction));
+        return Hex.add(hex, Hex.directions[direction]);
     }
 
-    static public ArrayList<Hex> neighbors(Hex hex) {
-        ArrayList<Hex> neighbors = new ArrayList<Hex>();
-        for (Hex direction : directions) {
-            neighbors.add(Hex.add(hex, direction));
+    static public Hex[] neighbors(Hex hex) {
+        Hex[] neighbors = new Hex[6];
+
+        for (int direction = 0; direction < neighbors.length; direction++) {
+            neighbors[direction] = Hex.add(hex, directions[direction]);
         }
+
         return neighbors;
     }
 
     static public Hex diagonalNeighbor(Hex hex, int direction) {
-        return Hex.add(hex, Hex.diagonals.get(direction));
+        return Hex.add(hex, Hex.diagonals[direction]);
     }
 
-    static public ArrayList<Hex> directions = new ArrayList<Hex>(){{
-        add(new Hex(1, 0, -1));
-        add(new Hex(1, -1, 0));
-        add(new Hex(0, -1, 1));
-        add(new Hex(-1, 0, 1));
-        add(new Hex(-1, 1, 0));
-        add(new Hex(0, 1, -1));
-    }};
+    static public Hex[] directions = new Hex[] {
+        new Hex(1, 0, -1),
+        new Hex(1, -1, 0),
+        new Hex(0, -1, 1),
+        new Hex(-1, 0, 1),
+        new Hex(-1, 1, 0),
+        new Hex(0, 1, -1)
+    };
 
-    static public ArrayList<Hex> diagonals = new ArrayList<Hex>(){{
-        add(new Hex(2, -1, -1));
-        add(new Hex(1, -2, 1));
-        add(new Hex(-1, -1, 2));
-        add(new Hex(-2, 1, 1));
-        add(new Hex(-1, 2, -1));
-        add(new Hex(1, 1, -2));
-    }};
+    static public Hex[] diagonals = new Hex[] {
+        new Hex(2, -1, -1),
+        new Hex(1, -2, 1),
+        new Hex(-1, -1, 2),
+        new Hex(-2, 1, 1),
+        new Hex(-1, 2, -1),
+        new Hex(1, 1, -2)
+    };
 
 }
