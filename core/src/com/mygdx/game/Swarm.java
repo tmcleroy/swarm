@@ -37,10 +37,11 @@ public class Swarm extends ApplicationAdapter {
         unit1 = new Unit(new Hex(6, -6, 0));
 
 
-        Predicate p = () -> true;
-        Predicate pp = () -> false;
-        System.out.println(p.evaluate());
-        System.out.println(pp.evaluate());
+        Predicate truePred = () -> true;
+        Predicate falsePred = () -> false;
+
+        Behavior b = Behavior.moveUp;
+        System.out.println(b.behave());
 	}
 
 	@Override
