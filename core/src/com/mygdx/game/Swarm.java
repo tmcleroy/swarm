@@ -6,12 +6,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import swarm.shared.Grid;
-import swarm.shared.Hex;
-import swarm.shared.Layout;
+import jdk.nashorn.internal.objects.annotations.Function;
+import swarm.shared.*;
 import swarm.shared.Point;
-import swarm.shared.Unit;
+import swarm.shared.Predicate;
+
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.function.*;
 
 public class Swarm extends ApplicationAdapter {
     int frame = 0;
@@ -33,6 +35,12 @@ public class Swarm extends ApplicationAdapter {
 			hexPoints.add(Layout.polygonCorners(layout, h));
 		}
         unit1 = new Unit(new Hex(6, -6, 0));
+
+
+        Predicate p = () -> true;
+        Predicate pp = () -> false;
+        System.out.println(p.evaluate());
+        System.out.println(pp.evaluate());
 	}
 
 	@Override
