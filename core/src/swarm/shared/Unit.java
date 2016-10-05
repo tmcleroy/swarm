@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Unit {
     public Hex position;
+    public Behavior behavior;
 
     public static Hex northEast = Hex.directions.get(0);
     public static Hex southEast = Hex.directions.get(1);
@@ -12,8 +13,13 @@ public class Unit {
     public static Hex northWest = Hex.directions.get(4);
     public static Hex north = Hex.directions.get(5);
 
-    public Unit (Hex position) {
+    public Unit (Hex position, Behavior behavior) {
         this.position = position;
+        this.behavior = behavior;
+    }
+
+    public void behave () {
+        this.behavior.behave(this);
     }
 
     public void move (Hex direction) {

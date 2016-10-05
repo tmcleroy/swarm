@@ -11,33 +11,41 @@ public class Behavior {
         this.actions = actions;
     }
 
-    public boolean behave () {
-        boolean result = this.conditions.result();
+    public boolean behave (Unit u) {
+        boolean result = this.conditions.result(u);
         if (result) {
-            this.actions.perform();
+            this.actions.perform(u);
         }
         return result;
     }
 
 
-
-    private static Predicate truePred = () -> true;
-    private static Predicate falsePred = () -> false;
-    private static Predicate logSomething = () -> {
-        System.out.println("DO AN ACTION!!!");
-        return true; // irrelevant, could be any bool
-    };
-    private static ArrayList<Predicate> truePreds = new ArrayList<Predicate>(){{
-        add(truePred);
-        add(() -> 1 + 1 == 3);
+    private static ArrayList<Predicate> truePredicates = new ArrayList<Predicate>(){{
+        add((Unit u) -> true);
     }};
-    private static ArrayList<Predicate> logEvals = new ArrayList<Predicate>(){{
-        add(logSomething);
+    private static ArrayList<Predicate> upActions = new ArrayList<Predicate>(){{
+        add((Unit u) -> {
+            u.move(Unit.north);
+            return true;
+        });
+    }};
+    private static ArrayList<Predicate> downActions = new ArrayList<Predicate>(){{
+        add((Unit u) -> {
+            u.move(Unit.south);
+            return true;
+        });
     }};
 
-    private static Conditions cond = new Conditions(truePreds, Conditions.Evaluation.ALL);
-    private static Actions acts = new Actions(logEvals);
-    public static Behavior moveUp = new Behavior(cond, acts);
+
+    public static Behavior moveUp = new Behavior(
+            new Conditions(truePredicates, Conditions.Evaluation.ALL),
+            new Actions(upActions)
+    );
+
+    public static Behavior moveDown = new Behavior(
+            new Conditions(truePredicates, Conditions.Evaluation.ALL),
+            new Actions(downActions)
+    );
 }
 
 class Conditions {
@@ -51,10 +59,10 @@ class Conditions {
         this.evalutation = evaluation;
     }
 
-    public boolean result () {
+    public boolean result (Unit u) {
         boolean reduced = true;
         for (Predicate func : this.items) {
-            boolean pass = func.evaluate();
+            boolean pass = func.evaluate(u);
             if (pass && this.evalutation == Evaluation.ANY) {
                 reduced = true;
                 break;
@@ -78,7 +86,7 @@ class Actions {
         this.items = items;
     }
 
-    public void perform () {
-        this.items.forEach(Predicate::evaluate);
+    public void perform (Unit u) {
+        this.items.forEach((item) -> item.evaluate(u));
     }
 }

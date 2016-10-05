@@ -2,5 +2,5 @@ package swarm.shared;
 
 @FunctionalInterface
 public interface Predicate {
-    boolean evaluate();
+    boolean evaluate(Unit u);
 }
